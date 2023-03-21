@@ -1,10 +1,6 @@
 ### Overview
 
-This repository provides the implementation for the paper "Generalization in Graph Neural Networks: Improved PAC-Bayesian Bounds on Graph Diffusion", which will be presented as a poster paper in AISTATS'23.
-
-In this work, we prove sharp generalization bounds for graph neural networks in terms of the graph feature diffusion matrix. An insight from our analysis is that maintaining a small perturbed loss ensures lower generalization gaps. Motivated by the observation, we propose an algorithm that performs gradient updates on the perturbed weights of a graph neural network, named noise stability optimization. 
-
-Besides the implementation of our algorithm, we also provide the implementation to evaluate Hessian-based quantities (e.g., traces, top-eigenvalues, Hessian vector product) of fine-tuned GNNs. Our observation is that the Hessian-based measurements correlate better with observed generalization gaps of fine-tuned GNNs. 
+This repository provides an algorithm that performs gradient updates on the perturbed weights of a graph neural network, named noise stability optimization. Besides the implementation of our algorithm, we also provide the implementation to evaluate Hessian-based quantities (e.g., traces, top-eigenvalues, Hessian vector product) of fine-tuned GNNs. Our observation is that the Hessian-based measurements correlate better with observed generalization gaps of fine-tuned GNNs. 
 
 ### Requirements
 
