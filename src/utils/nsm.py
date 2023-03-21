@@ -23,7 +23,7 @@ class NSM(torch.optim.Optimizer):
                     assert ("old_gradients" in self.state[p])
                     self.state[p]["old_gradients"] += p.grad.data.clone()*update_weight
 
-        if zero_grad: self.zero_grad()
+        if zero_grad: self.zero_grad(set_to_none=False)
 
     @torch.no_grad()
     def first_step(self, zero_grad=False, store_perturb=True):
@@ -40,7 +40,7 @@ class NSM(torch.optim.Optimizer):
                     e_w = self.state[p]["perturb"]
                     p.sub_(e_w)
 
-        if zero_grad: self.zero_grad()
+        if zero_grad: self.zero_grad(set_to_none=False)
 
     @torch.no_grad()
     def second_step(self, zero_grad=False):
@@ -53,7 +53,7 @@ class NSM(torch.optim.Optimizer):
         self.base_optimizer.step()  # do the actual weight update
 
         if zero_grad: 
-            self.zero_grad()
+            self.zero_grad(set_to_none=False)
 
     @torch.no_grad()
     def step(self, closure=None):
