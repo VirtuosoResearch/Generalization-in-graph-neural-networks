@@ -63,7 +63,7 @@ If you find this repository useful or happen to use it in a research paper, plea
 @article{ju2023generalization,
   title={Generalization in Graph Neural Networks: Improved PAC-Bayesian Bounds on Graph Diffusion},
   author={Ju, Haotian and Li, Dongyue and Sharma, Aneesh and Zhang, Hongyang R},
-  journal={International Conference on Artificial Intelligence and Statistics},
+  journal={Artificial Intelligence and Statistics},
   year={2023}
 }
 ```
