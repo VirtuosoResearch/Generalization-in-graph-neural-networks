@@ -1,6 +1,6 @@
 ### Overview
 
-This repository provides an algorithm that performs gradient updates on the perturbed weights of a graph neural network, named noise stability optimization. Besides the implementation of our algorithm, we also provide the implementation to evaluate Hessian-based quantities (e.g., traces, top-eigenvalues, Hessian vector product) of fine-tuned GNNs. Our observation is that the Hessian-based measurements correlate better with observed generalization gaps of fine-tuned GNNs. 
+We provide the implementation to evaluate Hessian-based quantities (e.g., traces, top-eigenvalues, Hessian vector product) of graph neural networks. Our observation is that the Hessian-based measurements correlate better with observed generalization gaps of fine-tuned GNNs. 
 
 ### Requirements
 
@@ -19,9 +19,25 @@ Our code is built on the project of ["Strategies for Pre-training Graph Neural N
 
 ### Usage
 
+##### Evaluating the Hessian-based measures
+
+Use the following scripts to compute Hessian-based measurements. We use Hessian vector multiplication tools from PyHessian (Yao et al., 2020).
+
+- `compute_hessian_spectra.py` computes the trace and the eigenvalues of the loss's Hessian matrix of each layer in a neural network.
+- `compute_hessian_norms.py` computes the Hessian-based vector product.
+
+Please follow the bash script examples to run the commands. Specify the `checkpoint_name` and `dataset` for computing the quantities. 
+
+```bash
+python compute_hessian_spectra.py --input_model_file model_gin/supervised_contextpred.pth --split scaffold --gnn_type gin --dataset $dataset --batch_size 32 --device 0 --checkpoint_name $checkpoint_name
+
+python compute_hessian_trace.py --input_model_file model_gin/supervised_contextpred.pth --split scaffold --gnn_type gin --dataset $dataset --batch_size 32 --device 0 --checkpoint_name $checkpoint_name
+```
+
+
 ##### Fine-tuning pretrained GNNs on molecular prediction datasets
 
-Use `finetune.py` to run experiments of fine-tuning on pretrained GNN models. Choose the dataset from sider, clintox, bace, bbbp, and tox21. Use `--nsm_sigma`, `--nsm_lam`, and `--num_perturbs` to change the hyper-parameters: sigma, lambda, and number of perturbations. We search the sigma in $[0.02, 0.05, 0.1]$ and the lambda in $[0.4, 0.6, 0.8]$.  The following bash script shows an example to run the commands. 
+We also provides an algorithm that performs gradient updates on the perturbed weights of a graph neural network. Use `finetune.py` to run experiments of fine-tuning on pretrained GNN models. Choose the dataset from sider, clintox, bace, bbbp, and tox21. Use `--nsm_sigma`, `--nsm_lam`, and `--num_perturbs` to change the hyper-parameters: sigma, lambda, and number of perturbations. We search the sigma in $[0.02, 0.05, 0.1]$ and the lambda in $[0.4, 0.6, 0.8]$.  The following bash script shows an example to run the commands. 
 
 ```bash
 python finetune.py --input_model_file model_gin/supervised_masking.pth --split scaffold --gnn_type gin --dataset sider --device 0\
@@ -40,20 +56,6 @@ python finetune.py --input_model_file model_gin/supervised_edgepred.pth --split 
 --train_nsm --nsm_sigma 0.1 --nsm_lam 0.4 --use_neg --reg_method penalty --lam_gnn 1e-4 --lam_pred 1e-4
 ```
 
-##### Evaluating the Hessian-based measures
-
-Use the following scripts to compute Hessian-based measurements. We use Hessian vector multiplication tools from PyHessian (Yao et al., 2020).
-
-- `compute_hessian_spectra.py` computes the trace and the eigenvalues of the loss's Hessian matrix of each layer in a neural network.
-- `compute_hessian_norms.py` computes the Hessian-based vector product.
-
-Please follow the bash script examples to run the commands. Specify the `checkpoint_name` and `dataset` for computing the quantities. 
-
-```bash
-python compute_hessian_spectra.py --input_model_file model_gin/supervised_contextpred.pth --split scaffold --gnn_type gin --dataset $dataset --batch_size 32 --device 0 --checkpoint_name $checkpoint_name
-
-python compute_hessian_trace.py --input_model_file model_gin/supervised_contextpred.pth --split scaffold --gnn_type gin --dataset $dataset --batch_size 32 --device 0 --checkpoint_name $checkpoint_name
-```
 
 ### Citation
 
